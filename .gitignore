@@ -1,0 +1,8 @@
+# Ignore a specific folder named 'temp' located anywhere in the project
+outputs/
+inputs/
+json/
+__pycache__/
+
+# Ignore all .json files
+*.json
