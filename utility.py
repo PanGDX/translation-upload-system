@@ -1,18 +1,27 @@
-import os,json, re
-
+import os
+import json
+import re
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+from openai import OpenAI
 
 
 def load_json(file_path):
     if file_path and not file_path.endswith(".json"):
         file_path += ".json"
-    
-    assert('.json' in file_path)
+
+    assert ('.json' in file_path)
 
     if os.path.exists(file_path):
         with open(file_path, "r") as file:
             return json.load(file)
     else:
         raise FileNotFoundError
+
 
 def split_paragraph(text):
 	midpoint = len(text) // 2
@@ -31,25 +40,40 @@ def split_paragraph(text):
 	return part1, part2
 
 
+# make into two functions: modify json file for name2name and data.json
+
+def modify_name2name_json_file(full_story_name, old_name, new_name):
+    """
+    Add a new name to do replace old_name with.
 
 
-def modify_json_file(file_path, append_json):
-    def deep_merge(source, update):
-        for key, value in update.items():
-            if isinstance(value, dict):
-                source[key] = deep_merge(source.get(key, {}), value)
-            else:
-                source[key] = value
-        return source
+    name2name.json has the format:
+    {"story name":{
+            "oldname" : ["new1", "new2"]
+        }
+    }
     """
-    @param file_path: full directory
-    @param append_json: json to merge
+    file_path = os.path.join(rootdir, "json", "name2name.json")
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+
+   assert(data[full_story_name])
+
+def modify_data_json_file(new_data_json:dict, isReplacing:bool  = True):
     """
+    Add data_json into existing json file content and saves it. 
+    If the element already exists, the new data will replace the old one by default
+    Set isReplacing = false to not replace existing content.
+    
+    new_data_json has to be in the format:
+    {"full story name" : {some data}}
+    """
+    file_path = os.path.join(rootdir, "json", "data.json") 
     with open(file_path, 'r') as file:
         data = json.load(file)
     
-    merged_data = deep_merge(data, append_json)
-    
+    assert( (story in data) for story in list(new_data_json.keys()) )
+
     with open(file_path, 'w') as file:
         json.dump(merged_data, file, indent=4)
 
@@ -79,26 +103,41 @@ def count_words(string):
     print(len(words))
 
 def clean_filename(filename: str) -> str:
+    """
+    Formats filenames and folders to fit Window's conventions
+    """
     cleaned = re.sub(r'[^\w\s\-\.\_]', '', filename)
     cleaned = cleaned.strip('.')
     return cleaned
 
 
 
+def add_story(full_story_name:str, patreon_story_name:str):
+    output_folder = clean_filename(full_story_name)
 
+    full_dir = os.path.join("inputs", output_folder)
+    os.makedirs(full_dir, exist_ok = True)
 
+    modify_json_file(
+            file_path=os.path.join("data.json"),
+            appendJson={
+                full_story_name: {
+                    "Next Translated Chapter": 1,
+                    "Next Inkstone Chapter": 1,
+                    "Next Patreon Chapter": 1,
+                    "Patreon Category": patreon_story_name
+                    }
+                }
+            )
+    return output_folder
 
+def setup_chrome_driver():
+    chromedriver_path = "chromedriver.exe"
+    chrome_options = Options()
+    chrome_options.add_argument("user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data")
+    driver = webdriver.Chrome(service=Service(chromedriver_path), options=chrome_options)
 
-
-
-
-"""
-Harry Potter Please Graduate From Hogwarts Soon and Go Away
-Naruto Alternative Sasuke Is Way Too Overpowered
-One Piece Biggest Scum in Marine History
-One Piece I Am Kaido And Luffy is Coming
-One Piece Im Yamamoto Genryusai
-Journalling in the MCU Characters Can Read My Diary
-Cyberpunk 2077 The Legendary Life
-One Piece From Flevance to the King of the World
-"""
+def get_openai_client():
+    api_loc = os.path.join(os.getcwd(),'json','APIKEY.json')
+    OpenAI_key = load_json(api_loc)["OpenAI"]
+    client = OpenAI(api_key=OpenAI_key)

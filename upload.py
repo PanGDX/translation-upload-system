@@ -1,21 +1,11 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
 import time
 
-chromedriver_path = "chromedriver.exe"
-chrome_options = Options()
-chrome_options.add_argument("user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data")
-driver = webdriver.Chrome(service=Service(chromedriver_path), options=chrome_options)
 
 
-# driver.get("https://www.patreon.com/FFAddict")
-driver.get("https://inkstone.webnovel.com/novels/list?story=1")
-
-def upload_to_patreon(category:str, title:str, content:str):
+def upload_to_patreon(category: str, title: str, content: str, driver):
 
     button_xpath = "//button[contains(., 'Create')]"
     button_element = WebDriverWait(driver, 10).until(
@@ -29,13 +19,11 @@ def upload_to_patreon(category:str, title:str, content:str):
     )
     text_upload_element.click()
 
-
     title_input_xpath = "//input[@placeholder='Add a title']"
     title_input_element = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, title_input_xpath))
     )
     title_input_element.send_keys(title)
-
 
     body_input_xpath = "//div[@contenteditable='true' and @class='ProseMirror remirror-editor']"
     body_input_element = WebDriverWait(driver, 10).until(
@@ -73,22 +61,23 @@ def upload_to_patreon(category:str, title:str, content:str):
     )
     publish_button_element.click()
 
-
     share_button_xpath = f"//button[@aria-label='Close the share dialog']"
     share_button_element = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, share_button_xpath))
     )
     share_button_element.click()
 
-def upload_to_inkstone(story:str, title:str, content:str, inCreatePage:bool = False):
-    if(not inCreatePage):
+
+def upload_to_inkstone(story: str, title: str, content: str, driver, inCreatePage: bool = False):
+    if (not inCreatePage):
         story_div_xpath = f"//tr[contains(., '{story}')]"
         story_div_element = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, story_div_xpath))
         )
-        
+
         explore_button_xpath = ".//button[@data-report-uiname='explore']"
-        explore_button = story_div_element.find_element(By.XPATH, explore_button_xpath)
+        explore_button = story_div_element.find_element(
+            By.XPATH, explore_button_xpath)
         explore_button.click()
 
     create_button_xpath = f"//button[contains(., 'CREATE CHAPTER')]"
@@ -123,7 +112,6 @@ def upload_to_inkstone(story:str, title:str, content:str, inCreatePage:bool = Fa
     )
     title_input_element.send_keys(title)
 
-
     publish_button_xpath = "//button[span[contains(., 'Publish')]]"
     publish_button_element = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, publish_button_xpath))
@@ -135,8 +123,3 @@ def upload_to_inkstone(story:str, title:str, content:str, inCreatePage:bool = Fa
         EC.element_to_be_clickable((By.XPATH, confirm_button_xpath))
     )
     confirm_button_element.click()
-try:
-    upload_to_inkstone("Harry Potter: Please Graduate From Hogwarts Soon and Go Away!", "Aplha", "asdw")
-except Exception as e:
-    print(e)
-input()
