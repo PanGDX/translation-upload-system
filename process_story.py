@@ -5,35 +5,41 @@ from utility import (
     submit_to_GPT,
     split_paragraph,
     get_openai_client,
-    clean_filename
+    clean_file_name
 )
-from openai import OpenAI
-from bs4 import BeautifulSoup
+from langdetect import detect
+import traceback
 
 # massive modifications needed
 
-def return_story_name(mode):
+def process_story():
+    client = get_openai_client()
+
     print("Choose the story name using the number")
-    storylist_file = open(
-        f"{os.getcwd()}\\{'ch' if mode == 'translate' else 'en'}_storylist.txt", "r")
-    storylist = storylist_file.read().split("\n")
+    story_data_json = load_json(os.path.join(os.getcwd(), 'json', 'data.json'))
+    prompt_json = load_json(os.path.join(os.getcwd(), 'json', 'prompts.json'))
+
+    storylist = list(story_data_json.keys())
 
     for i, story in enumerate(storylist, 1):
         print(f"{i}: {story}")
-    return storylist[int(input(":"))-1]
+    story_name = storylist[int(input("Choose: ")) - 1]
+    input_story_folder = os.path.join(
+        os.getcwd(), "inputs", clean_file_name(story_name))
+    output_story_folder = os.path.join(
+        os.getcwd(), "outputs", clean_file_name(story_name))
 
-def process_story():
-    client = get_openai_client()
-    
-    mode = input("Choose mode (translate/refine): ").lower()
-    if mode not in ['translate', 'refine']:
-        raise ValueError("Invalid mode. Choose 'translate' or 'refine'.")
+    print("In Folder: " + input_story_folder)
 
-    STORYNAME = return_story_name(mode)
-    storyfolder = clean_filename(STORYNAME)
-    print("In Folder: " + storyfolder)
+    sample_file = open(os.path.join(input_story_folder,
+                       "1.txt"), 'r', encoding='utf-8').read()
+    lang_detected = detect(sample_file)
+    print(f'Language detected: {lang_detected}')
+    if ('zh' not in lang_detected) and ('en' != lang_detected):
+        raise ValueError("Wrong Language!!!!")
+    # en, zh-cn, zh-tw
 
-    if mode == 'translate':
+    if 'zh' in lang_detected:
         context = input("Context of the story: ")
         names = ""
         while True:
@@ -44,91 +50,108 @@ def process_story():
 
     chapters = int(input("How many chapters to process: "))
 
+    next_input_chapter = story_data_json[story_name]["Next Translated Chapter"]
+    if not os.path.isdir(output_story_folder):
+        os.makedirs(output_story_folder)
+        next_output_chapter = 1
+    elif not os.path.exists(os.path.join(output_story_folder, '1.txt')):
+        next_output_chapter = 1
+    else:
+        next_output_chapter = sorted(
+            os.listdir(output_story_folder),
+            key=lambda name: int(name.split('.')[0])
+        )[-1]
 
-    translation_model = grammar_model = "gpt-4o"
 
-    next_chapter_to_process = load_json(os.path.join(
-        os.getcwd(), "next-translation.json"))[STORYNAME]
-    input_folder = os.path.join(
-        os.getcwd(), "input", "chinese" if mode == 'translate' else "english", storyfolder)
-    output_folder = os.path.join(
-        os.getcwd(), "output-text", "chinese" if mode == 'translate' else "english", storyfolder)
-
-    if not os.path.isdir(output_folder):
-        os.makedirs(output_folder)
+    if 'zh' in lang_detected:
+        translation_message = prompt_json["translation-translate"]
+        translation_message = translation_message.format(
+                    context=context,
+                    names=names
+        )
+        print(translation_message)
+    grammar_message = prompt_json["grammar-translate"]
 
     try:
         for _ in range(chapters):
-            print(f"Processing chapter: {next_chapter_to_process}")
+            print(f"Processing chapter: {next_input_chapter}")
 
-            current_chapter_str = str(next_chapter_to_process)
-            potential_names = [
-                f"{current_chapter_str.zfill(i)}.txt" for i in range(6)]
+            input_chapter_file_dir = os.path.join(
+                input_story_folder, f"{next_input_chapter}.txt")
+            output_chapter_file_dir = os.path.join(
+                output_story_folder, f"{next_output_chapter}.txt")
 
-            chapter_file_dir = None
-            for file_name in potential_names:
-                file_path = os.path.join(input_folder, file_name)
-                if os.path.isfile(file_path):
-                    chapter_file_dir = file_path
-                    break
-
-            outputchapter = sorted(
-                os.listdir(output_folder),
-                key=lambda name: int(name.split('.')[0])
-            )[-1]
-            outputchapter = f"{int(outputchapter.split('.')[0]) + 1}.txt"
-
-            print(chapter_file_dir)
-            if chapter_file_dir is None:
+            print(input_chapter_file_dir)
+            if input_chapter_file_dir is None:
                 raise FileNotFoundError("Chapter file not found")
 
-            with open(chapter_file_dir, "r", encoding="utf-8") as content_file:
+            with open(input_chapter_file_dir, "r", encoding="utf-8") as content_file:
                 content = content_file.read().replace("\n\n", "\n")
 
-            if mode == 'translate':
-                translation_message = f""""""
-                grammar_message = """""".strip()
-
-            else:  # refine mode
-                grammar_message = """""".strip()
 
             final_text = None
             try:
                 first_chunk, second_chunk = split_paragraph(content)
 
-                if mode == 'translate':
-                    first_chunk = f"""""".strip()
-
-                    second_chunk = f"""""".strip()
-
+                if 'zh' in lang_detected:
                     temp = submit_to_GPT(
-                        client, translation_model, translation_message, first_chunk, "Translating")
+                        client=client,
+                        system_message=translation_message,
+                        user_message=first_chunk,
+                        log="Translating")
                     final_text = submit_to_GPT(
-                        client, grammar_model, grammar_message, temp, "Improving Grammar")
+                        client=client, 
+                        system_message=grammar_message, 
+                        user_message=temp, 
+                        log="Improving Grammar")
+
                     final_text += "\n\n"
+
+                    secondary_translation_message = translation_message + f"\n### Previous Chapter: Make sure the names are aligned\n{final_text}"
                     temp = submit_to_GPT(
-                        client, translation_model, translation_message, second_chunk, "Translating")
-                    final_text += submit_to_GPT(client, grammar_model,
-                                               grammar_message, temp, "Improving Grammar")
+                        client=client, 
+                        system_message=secondary_translation_message, 
+                        user_message=second_chunk, 
+                        log="Translating")
+                    final_text += submit_to_GPT(
+                        client=client, 
+                        system_message=grammar_message, 
+                        user_message=temp, 
+                        log="Improving Grammar")
                 else:
                     final_text = submit_to_GPT(
-                        client, grammar_model, grammar_message, first_chunk, "Improving Grammar")
+                        client=client, 
+                        system_message=grammar_message, 
+                        user_message=first_chunk, 
+                        log="Improving Grammar")
                     final_text += "\n\n"
-                    final_text += submit_to_GPT(client, grammar_model,
-                                               grammar_message, second_chunk, "Improving Grammar")
+                    final_text += submit_to_GPT(
+                        client=client, 
+                        system_message=grammar_message, 
+                        user_message=second_chunk, 
+                        log="Improving Grammar")
 
             except Exception as e:
+                print(traceback.format_exc())
                 print("ERROR OCCURRED\n", e)
 
             if final_text is not None:
-                with open(os.path.join(output_folder, outputchapter), "w", encoding="utf-8") as append_to_file:
-                    append_to_file.write(str(final_text))
-                next_chapter_to_process += 1
+                with open(output_chapter_file_dir, "w", encoding="utf-8") as outfile:
+                    outfile.write(str(final_text))
+                next_input_chapter += 1
+                next_output_chapter += 1
             else:
                 raise Exception("Error in processing!!!!")
     except Exception as e:
+        print(traceback.format_exc())
         print(e)
     finally:
-        updated_json = {STORYNAME: next_chapter_to_process}
-        modify_json_file(os.path.join(
-            os.getcwd(), "next-translation.json"), updated_json)
+        story_data_json[story_name]["Next Translated Chapter"] = next_input_chapter
+        json_object = json.dumps(story_data_json, indent=4)
+
+        with open(os.path.join(os.getcwd(), 'json', 'data.json'), "w", encoding='utf-8') as outfile:
+            outfile.write(json_object)
+
+
+if __name__ == '__main__':
+    process_story()

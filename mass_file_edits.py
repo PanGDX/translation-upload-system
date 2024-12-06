@@ -1,0 +1,182 @@
+"""
+This program handles the mass replacement of names
+This works for both Chinese and English (input and output)
+The replacement is read from a json file
+The format of the json file is as follows
+{
+    "story": {
+        "Replace name" : "New name"
+    }
+}
+"""
+
+# Test Status: Tested
+
+import re
+import os
+from utility import load_json
+from utility import  modify_name2name_json_file
+
+def mass_replace():
+    def replace_in_all_files(story_folder: str, old_name: str, new_name: str):
+        # Adding capturing groups around the special characters
+
+        pattern = fr"(?<![A-Za-z]){old_name}(?![A-Za-z])"        
+        for file in os.listdir(story_folder):
+            file_path = os.path.join(story_folder, file)
+            file_content = open(file=file_path, mode="r", encoding="utf-8").read()
+            with open(file=file_path, mode="w", encoding="utf-8") as file_overwrite:
+                overwrite = re.sub(
+                    pattern,
+                    new_name,
+                    file_content
+                )
+                file_overwrite.write(overwrite)
+
+    replacement_names_json = load_json(os.path.join(os.getcwd(),'json','name2name.json'))
+    input_folder_question = str(input("Is the story's folder in the 'input' folder? (y/n) "))
+    
+    if (input_folder_question).lower() == "y":
+        parent_folder = "inputs"
+    else:
+        parent_folder = "outputs"
+
+    print("Choose the story name using the number")
+    for i, story in enumerate(os.listdir(os.path.join(parent_folder))):
+        print(f"{i+1}: {story}")
+
+    story_folder = os.listdir(os.path.join(parent_folder))[int(input(":"))-1]
+    story_folder = os.path.join(os.getcwd(), parent_folder, story_folder)
+
+    for story, name2name in replacement_names_json.items():
+        for new_name, old_name_list in name2name.items():
+            for old_name in old_name_list:
+                print(f"Replacing: {old_name} -> {new_name}")
+                replace_in_all_files(story_folder, old_name, new_name)
+
+
+
+def cut_front_and_back():
+    """
+    ### @param front_cut: the number of lines to be removed in front. Inclusive.
+    ### @param back_cut: the number of lines to be removed at the back. Inclusive. 
+    """
+
+    parent_folder = os.path.join(os.getcwd(), "inputs")
+    print("Choose the story name using the number")
+    for i, story in enumerate(os.listdir(os.path.join(os.getcwd(), "inputs"))):
+        print(f"{i+1}: {story}")
+
+    story_folder = os.listdir(os.path.join(parent_folder))[int(input(":"))-1]
+    story_folder = os.path.join(os.getcwd(), parent_folder, story_folder)
+
+    front_cut = int(input("Front cut: "))
+    back_cut = int(input("Back cut: "))
+
+    for name in os.listdir(story_folder):
+        with open(os.path.join(story_folder, name), "r", encoding='utf-8') as file:
+            content = file.readlines()
+
+        content = content[front_cut:-back_cut]
+        content = "".join(content)
+        with open(os.path.join(story_folder, name), "w", encoding='utf-8') as file:
+            file.write(content)
+        print(f"Done: {name}")
+
+
+def remove_all_name_paddings():
+    """
+    Removes all the paddings in the names of all stories. O(N)
+    For example: 0001.txt -> 1.txt
+    """
+    parent_folder = os.path.join(os.getcwd(), "inputs")
+    for story in os.listdir(parent_folder):
+        story_folder = os.path.join(parent_folder, story)
+        for chapter in os.listdir(story_folder):
+            if(chapter[0] == '0'):
+                os.rename(
+                    src = os.path.join(story_folder, chapter),
+                    dst = os.path.join(story_folder, chapter.lstrip("0"))
+                )
+                print(f"Renamed: {chapter} -> {chapter.lstrip('0')}")
+
+def check_sequential_file_number():
+    """
+    Checks that all chapters exist in sequential numbers
+    Optional: Edit
+    """
+    parent_folder = os.path.join(os.getcwd(), "inputs")
+    for story in os.listdir(parent_folder):
+        story_folder = os.path.join(parent_folder, story)
+        for counter, chapter in enumerate(os.listdir(story_folder),1):
+            if(int(chapter.split('.')[0]) != counter):
+                print(f"Error: {counter} != {chapter} for story: {story}")
+                break
+
+def check_sequential_file_number():
+    """
+    Checks that all chapters exist in sequential numbers
+    Optional: Edit
+    """
+    for folder in ["inputs", "outputs"]:
+        parent_folder = os.path.join(os.getcwd(), folder)
+        for story in os.listdir(parent_folder):
+            story_folder = os.path.join(parent_folder, story)
+            files = os.listdir(story_folder)
+
+            txt_files = [f for f in files if f.endswith('.txt')]
+            sorted_files = sorted(txt_files, key=lambda x: int(x.split('.')[0]))
+            
+            for counter, chapter in enumerate(sorted_files,1):
+                if(int(chapter.split('.')[0]) != counter):
+                    print(f"Error: {counter} != {chapter} for story: {story}")
+                    break
+
+def make_sequential_file_number():
+
+    for folder in ["inputs", "outputs"]:
+        parent_folder = os.path.join(os.getcwd(), folder)
+        for story in os.listdir(parent_folder):
+            story_folder = os.path.join(parent_folder, story)
+            files = os.listdir(story_folder)
+
+            txt_files = [f for f in files if f.endswith('.txt')]
+            sorted_files = sorted(txt_files, key=lambda x: int(x.split('.')[0]))
+            
+            print()
+            print("#######################################")
+            print(f"Editing in: {story_folder}")
+            for counter, chapter in enumerate(sorted_files,1):
+                os.rename(
+                src = os.path.join(story_folder, chapter),
+                dst = os.path.join(story_folder, f"{counter}.txt")
+                )
+                print(f"{chapter} -> {counter}.txt")
+
+if __name__ == '__main__':
+    print("1. Mass Replace Names using name2name.json")
+    print("2. Modify name2name json")
+    print("3. Cut Front and Back")
+    print("4. Remove all name paddings")
+    print("5. Check that files are sequential")
+    print("6. Make all files sequential")
+    choice = int(input("Choice: "))
+    match choice:
+        case 1:
+            mass_replace()
+        case 2:
+
+            full_story_name = str(input("Full story name (from name2name.json):"))
+            old_name = str(input("Old name:"))
+            new_name = str(input("New name:"))
+            modify_name2name_json_file(full_story_name,old_name,new_name)
+        case 3:
+            cut_front_and_back()
+        case 4:
+            remove_all_name_paddings()
+        case 5:
+            check_sequential_file_number()
+        case 6:
+            make_sequential_file_number()
+        case _:
+            print("Error pls")

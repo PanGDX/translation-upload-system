@@ -1,16 +1,27 @@
 import os
 import json
 import re
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from openai import OpenAI
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 
 
-def load_json(file_path):
+
+# Functions that concern the management and updating of files and folders and their contents
+
+def load_json(file_path: str) -> dict:
+    """
+    ### @param file_path: a string that is the absolute file path
+    ### @return: a dictionary (json file content)
+
+    If the file does not exist, the function raises a FileNotFoundError
+    """
     if file_path and not file_path.endswith(".json"):
         file_path += ".json"
 
@@ -23,121 +34,195 @@ def load_json(file_path):
         raise FileNotFoundError
 
 
-def split_paragraph(text):
-	midpoint = len(text) // 2
-	closest_newline = text.find('\n', midpoint)
-
-	if closest_newline == -1:
-		# If no newline character is found, search backwards from the midpoint.
-		closest_newline = text.rfind('\n', 0, midpoint)
-		if closest_newline == -1:
-			# If still no newline character, split at the midpoint.
-			closest_newline = midpoint
-
-	part1 = text[:closest_newline].strip()
-	part2 = text[closest_newline:].strip()
-
-	return part1, part2
-
-
-# make into two functions: modify json file for name2name and data.json
-
-def modify_name2name_json_file(full_story_name, old_name, new_name):
+def split_paragraph(text: str) -> tuple[str, str]:
     """
+    ### @param text: a paragraph
+    ### @return: returns the paragraph divided into two portions of close-to-equal size
+    """
+    midpoint = len(text) // 2
+    closest_newline = text.find('\n', midpoint)
+
+    if closest_newline == -1:
+        closest_newline = text.rfind('\n', 0, midpoint)
+        if closest_newline == -1:
+            closest_newline = midpoint
+
+    part1 = text[:closest_newline].strip()
+    part2 = text[closest_newline:].strip()
+
+    return part1, part2
+
+
+def modify_name2name_json_file(full_story_name: str, old_name: str, new_name: str):
+    """
+    ### @param full_story_name
+    ### @param old_name: old name to be replaced
+    ### @param new_name: new name to use to replace
     Add a new name to do replace old_name with.
 
 
     name2name.json has the format:
-    {"story name":{
-            "oldname" : ["new1", "new2"]
+    {
+        "story name":
+            {
+                "new_name" : ["old1", "old2"]
+            }
+    }
+    """
+    file_path = os.path.join(os.getcwd(), "json", "name2name.json")
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+
+    if full_story_name not in data:
+        data[full_story_name] = {}
+
+    if (new_name not in data[full_story_name]):
+        data[full_story_name][new_name] = []
+
+    assert (type(data[full_story_name][new_name]) == list)
+    data[full_story_name][new_name].append(old_name)
+
+    json_object = json.dumps(data, indent=4)
+    name2name_dir = os.path.join(os.getcwd(), 'json', 'name2name.json')
+    with open(name2name_dir, "w") as outfile:
+        outfile.write(json_object)
+
+
+def modify_data_json_file(
+        full_story_name: str,
+        patreon_category: str,
+        next_translated: int = 1,
+        next_inkstone: int = 1,
+        next_patreon: int = 1):
+    """
+    ### @param full_story_name
+    ### @param patreon_category: the name of the story on Patreon's dropdown bar
+    ### @param next_translated: next chapter to be translated. Default is 1
+    ### @param next_inkstone: next chapter to be uploaded on inkstone. Default is 1
+    ### @param next_patreon: next chapter to be uploaded on patreon. Default is 1
+
+    WILL replace the existing information. If the data does not exist, it will create it.
+
+
+    data.json is in the format:
+    {
+        "story 1":{
+            "Next Translated Chapter": next_translated,
+            "Next Inkstone Chapter": next_inkstone,
+            "Next Patreon Chapter": next_patreon,
+            "Patreon Category": patreon_category
+        },
+        "story 2": {
+            ...
         }
     }
     """
-    file_path = os.path.join(rootdir, "json", "name2name.json")
+    file_path = os.path.join(os.getcwd(), "json", "data.json")
     with open(file_path, 'r') as file:
         data = json.load(file)
 
-   assert(data[full_story_name])
+    if full_story_name not in data:
+        data[full_story_name] = {}
 
-def modify_data_json_file(new_data_json:dict, isReplacing:bool  = True):
     """
-    Add data_json into existing json file content and saves it. 
-    If the element already exists, the new data will replace the old one by default
-    Set isReplacing = false to not replace existing content.
-    
-    new_data_json has to be in the format:
-    {"full story name" : {some data}}
+        patreon_category: str,
+        next_translated: int = 1,
+        next_inkstone: int = 1,
+        next_patreon: int = 1,
     """
-    file_path = os.path.join(rootdir, "json", "data.json") 
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-    
-    assert( (story in data) for story in list(new_data_json.keys()) )
 
-    with open(file_path, 'w') as file:
-        json.dump(merged_data, file, indent=4)
+    data[full_story_name]["Patreon Category"] = patreon_category
+    data[full_story_name]["Next Inkstone Chapter"] = next_inkstone
+    data[full_story_name]["Next Translated Chapter"] = next_translated
+    data[full_story_name]["Next Patreon Chapter"] = next_patreon
+
+    json_object = json.dumps(data, indent=4)
+    name2name_dir = os.path.join(os.getcwd(), 'json', 'data.json')
+    with open(name2name_dir, "w") as outfile:
+        outfile.write(json_object)
 
 
-def submit_to_GPT(client, model:str, system_message, user_message, log:str = ""):
-    completion = client.chat.completions.create(
-        model=model,
-        max_tokens = 4095,
-        messages=[{"role": "system", "content": system_message}, 
-                    {"role": "user", "content": user_message}
-                    ],
-    )
-    if(log!=""): print(log)
 
-    return completion.choices[0].message.content
-
-def append_and_clean(file_path, text):
-    with open(file_path, 'r') as file:
-        lines = file.readlines()
-    lines = [line for line in lines if line.strip()]
-    lines.append(text + '\n')
-    with open(file_path, 'w') as file:
-        file.writelines(lines)
-
-def count_words(string):
-    words = string.split()
-    print(len(words))
-
-def clean_filename(filename: str) -> str:
+def clean_file_name(file_name: str) -> str:
     """
-    Formats filenames and folders to fit Window's conventions
+    ### @param file_name: the file_name or folder name to be cleaned up
+
+    Formats file_names and folders to fit Window's conventions
     """
-    cleaned = re.sub(r'[^\w\s\-\.\_]', '', filename)
+    cleaned = re.sub(r'[^\w\s\-\.\_]', '', file_name)
     cleaned = cleaned.strip('.')
     return cleaned
 
 
+def add_story(full_story_name: str, patreon_story_name: str) -> str:
+    """
+    ### @param full_story_name: the full story name
+    ### @param patreon_story_name: the patreon category name
+    ### @return: the output folder's name that has been formatted
 
-def add_story(full_story_name:str, patreon_story_name:str):
-    output_folder = clean_filename(full_story_name)
+    WILL replace patreon_story_name if the category already exists.
+    """
+
+    output_folder = clean_file_name(full_story_name)
 
     full_dir = os.path.join("inputs", output_folder)
-    os.makedirs(full_dir, exist_ok = True)
+    os.makedirs(full_dir, exist_ok=True)
 
-    modify_json_file(
-            file_path=os.path.join("data.json"),
-            appendJson={
-                full_story_name: {
-                    "Next Translated Chapter": 1,
-                    "Next Inkstone Chapter": 1,
-                    "Next Patreon Chapter": 1,
-                    "Patreon Category": patreon_story_name
-                    }
-                }
-            )
+    modify_data_json_file(
+        full_story_name=full_story_name,
+        patreon_category=patreon_story_name,
+    )
     return output_folder
 
-def setup_chrome_driver():
-    chromedriver_path = "chromedriver.exe"
-    chrome_options = Options()
-    chrome_options.add_argument("user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data")
-    driver = webdriver.Chrome(service=Service(chromedriver_path), options=chrome_options)
 
-def get_openai_client():
-    api_loc = os.path.join(os.getcwd(),'json','APIKEY.json')
+
+
+# Functiosn that concern drivers and interactions with GPT 
+
+def setup_chrome_driver() -> webdriver.Chrome:
+    print("Make sure to close existing Chrome or else an error may occur")
+    time.sleep(2)
+
+    chrome_options = Options()
+    chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
+    # Overcome limited resource issues
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    # Applicable only for Windows OS
+    chrome_options.add_argument("--disable-gpu")
+    # Enable remote debugging
+    chrome_options.add_argument("--remote-debugging-port=9222")
+    chrome_options.add_argument(
+        "user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data")
+    driver = webdriver.Chrome(service=Service(
+        ChromeDriverManager().install()), options=chrome_options)
+    return driver
+
+
+def get_openai_client() -> OpenAI:
+    api_loc = os.path.join(os.getcwd(), 'json', 'APIKEY.json')
     OpenAI_key = load_json(api_loc)["OpenAI"]
     client = OpenAI(api_key=OpenAI_key)
+    return client
+
+
+
+def submit_to_GPT(client: OpenAI, system_message: str, user_message: str, model: str = "gpt-4o", log: str = "") -> str:
+    """
+    ### @param client: OpenAI client
+    ### @param system_message: the system prompt
+    ### @param user_message: the user prompt
+    ### @param model: the model to be used, default: gpt-4o
+    ### @param log: a string printed when the function is ran
+    """
+    completion = client.chat.completions.create(
+        model=model,
+        max_tokens=4095,
+        messages=[
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": user_message}
+        ],
+    )
+    if (log != ""):
+        print(log)
+
+    return completion.choices[0].message.content
