@@ -6,8 +6,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium import webdriver
 import os
+import time
+import random
 from utility import add_story, setup_chrome_driver
 import traceback
+from selenium.webdriver.common.action_chains import ActionChains
+from bs4 import BeautifulSoup
+
 
 def url_formatting(url: str, next_link: str) -> str:
 	"""
@@ -23,8 +28,9 @@ def url_formatting(url: str, next_link: str) -> str:
 		# Handle relative URLs
 		base_url = url[:url.find("/", url.find("//") + 2)]
 		return base_url + next_link
-	
-def find_divs_with_text(content_text:str, driver: webdriver.Chrome) -> tuple[str, str]:
+
+
+def find_divs_with_text(content_text: str, driver: webdriver.Chrome) -> tuple[str, str]:
 	"""
 	### @param content_text: the specified content text
 	### @param driver: Chrome Driver
@@ -44,14 +50,29 @@ def find_divs_with_text(content_text:str, driver: webdriver.Chrome) -> tuple[str
 		print(f"Found content div - ID: '{tag_id}', Class: '{tag_class}'")
 		return tag_class.strip(), tag_id.strip()
 	except TimeoutException:
-		raise TimeoutException(
-			"Timeout: Could not find the div containing the specified content text.")
+		page_source = driver.page_source
+		soup = BeautifulSoup(page_source, "html.parser")
+		divs = soup.find_all(lambda tag: tag.name ==
+							"div" and search_text in tag.get_text(strip=True))
+		if divs:
+			div = divs[0]
+			tag_class = " ".join(div.get("class", [])) if div.get("class") else ""
+			tag_id = div.get("id", "")
+			print(
+				f"Found content div using fallback - ID: '{tag_id}', Class: '{tag_class}'")
+			return tag_class.strip(), tag_id.strip()
+		else:
+			raise TimeoutException(
+				"Timeout: Could not find the div containing the specified content text using both Selenium and BeautifulSoup."
+			)
+
 	except Exception as e:
 		print(traceback.format_exc())
 		print(f"Unexpected error: {e}")
 		raise
 
-def get_link(link_text:str, driver:webdriver.Chrome) -> str:
+
+def get_link(link_text: str, driver: webdriver.Chrome) -> str:
 	"""
 	### @param link_text: the text leading to the next chapter (such as 'Next')
 	### @param driver: Chrome Driver
@@ -66,13 +87,17 @@ def get_link(link_text:str, driver:webdriver.Chrome) -> str:
 			xpath_expression = f"//a[contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '{search_text}')]"
 			try:
 				matched_tag = WebDriverWait(driver, 10).until(
-					EC.presence_of_element_located((By.XPATH, xpath_expression))
+					EC.presence_of_element_located(
+						(By.XPATH, xpath_expression))
 				)
 				href = matched_tag.get_attribute("href")
+				actions = ActionChains(driver)
+				actions.move_to_element(matched_tag)
 				if href:
 					return href
 			except TimeoutException:
-				print(f"No link found with text '{search_text}'. Trying next option.")
+				print(
+					f"No link found with text '{search_text}'. Trying next option.")
 				continue
 			except Exception as e:
 				print(traceback.format_exc())
@@ -83,7 +108,7 @@ def get_link(link_text:str, driver:webdriver.Chrome) -> str:
 		"Failed to fetch the next chapter link with the given link text. Possibly at the end of chapters.")
 
 
-def scrape():
+def scrape(double_count:bool):
 	"""
 	The primary function to be called
 	"""
@@ -91,7 +116,8 @@ def scrape():
 	patreon_story_name: str = input("Patreon Category name: ").strip()
 
 	try:
-		output_folder_name: str = add_story(full_story_name, patreon_story_name)
+		output_folder_name: str = add_story(
+			full_story_name, patreon_story_name)
 	except Exception as e:
 		print(f"Error creating output folder: {e}")
 		return
@@ -101,9 +127,10 @@ def scrape():
 	except ValueError:
 		print("Invalid chapter number. Please enter an integer.")
 		return
-	
+
 	try:
-		no_of_chapters_to_scrape: int = int(input("No of chapters to scrape: ").strip())
+		no_of_chapters_to_scrape: int = int(
+			input("No of chapters to scrape: ").strip())
 	except ValueError:
 		print("Invalid chapter number. Please enter an integer.")
 		return
@@ -120,42 +147,52 @@ def scrape():
 
 	# Set up the Chrome driver
 	try:
-		driver = setup_chrome_driver()
+		is_headless = str(input("Headless (y/n): "))
+		if is_headless == 'y':
+			is_headless = True
+		else:
+			is_headless = False
+		driver = setup_chrome_driver(is_headless)
 	except Exception as e:
 		print(f"Error setting up Chrome driver: {e}")
 		return
 
 	print("Driver is running")
-	driver.get(url_to_scrape)	
+	driver.get(url_to_scrape)
 
 	try:
-		content_class, content_id = find_divs_with_text(content_text,driver=driver)
+		content_class, content_id = find_divs_with_text(
+			content_text, driver=driver)
 	except Exception as e:
 		print(f"An error occurred during scraping: {e}")
 		return
 
+	if content_class and content_id:
+		xpath_expression = f"//div[@class='{content_class}' and @id='{content_id}']"
+	elif content_class:
+		xpath_expression = f"//div[@class='{content_class}']"
+	elif content_id:
+		xpath_expression = f"//div[@id='{content_id}']"
+	else:
+		raise ValueError("No class or id found for content div.")
+	# Determine the XPath expression based on available class and ID
 
 	url = url_to_scrape
 	counter = current_chapter_number
+
+	output_dir = os.path.join(os.getcwd(), "inputs", output_folder_name)
+	os.makedirs(output_dir, exist_ok=True)
+	skip_counter = True
 
 	while no_of_chapters_to_scrape != 0:
 		no_of_chapters_to_scrape -= 1
 		try:
 			driver.get(url)
 
-			# Determine the XPath expression based on available class and ID
-			if content_class and content_id:
-				xpath_expression = f"//div[### @class='{content_class}' and ### @id='{content_id}']"
-			elif content_class:
-				xpath_expression = f"//div[### @class='{content_class}']"
-			elif content_id:
-				xpath_expression = f"//div[### @id='{content_id}']"
-			else:
-				raise ValueError("No class or id found for content div.")
-
 			# Fetch all elements matching the XPath expression
 			contents = WebDriverWait(driver, 10).until(
-				EC.presence_of_all_elements_located((By.XPATH, xpath_expression))
+				EC.presence_of_all_elements_located(
+					(By.XPATH, xpath_expression))
 			)
 
 			if not contents:
@@ -165,22 +202,32 @@ def scrape():
 			content = "\n".join([element.text for element in contents])
 
 			# Save the content to a file
-			output_dir = os.path.join(os.getcwd(), "inputs", output_folder_name)
-			os.makedirs(output_dir, exist_ok=True)
 
 			output_file_path = os.path.join(output_dir, f"{counter}.txt")
 
-			with open(output_file_path, "w", encoding="utf-8") as file:
-				file.write(content)
+			if double_count:
+				with open(output_file_path, "a", encoding="utf-8") as file:
+					file.write(content)
+			else:
+				with open(output_file_path, "w", encoding="utf-8") as file:
+					file.write(content)
 
 			print(f"Chapter {counter} saved to {output_file_path}")
 
 			# Attempt to find and navigate to the next chapter link
 			try:
+
+				time.sleep(random.uniform(0.7, 1))
 				next_link = get_link(link_text, driver)
 				if next_link:
 					url = url_formatting(url, next_link)
-					counter += 1
+
+					if not skip_counter:
+						counter += 1
+
+					if double_count == True:
+						skip_counter = not skip_counter
+
 					print(f"Navigating to the next link: {url}")
 				else:
 					print("No next link found, or there was an error fetching it.")
@@ -197,9 +244,13 @@ def scrape():
 		except Exception as e:
 			print(f"An error occurred while scraping the webpage: {e}")
 			break  # Exit the loop on general exception
-	
+
 	driver.quit()
 
 
 if __name__ == '__main__':
-	scrape()
+	
+	double_count = False
+	if(str(input("Double count? (y/n): "))) == 'y':
+		double_count = True
+	scrape(double_count)

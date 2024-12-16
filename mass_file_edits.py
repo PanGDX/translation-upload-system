@@ -12,8 +12,7 @@ The format of the json file is as follows
 
 # Test Status: Tested
 
-import re
-import os
+import re, os, filecmp
 from utility import load_json
 from utility import  modify_name2name_json_file
 
@@ -47,7 +46,7 @@ def mass_replace():
 
     story_folder = os.listdir(os.path.join(parent_folder))[int(input(":"))-1]
     story_folder = os.path.join(os.getcwd(), parent_folder, story_folder)
-
+    story_folder = choose_file_dir()
     for story, name2name in replacement_names_json.items():
         for new_name, old_name_list in name2name.items():
             for old_name in old_name_list:
@@ -61,14 +60,7 @@ def cut_front_and_back():
     ### @param front_cut: the number of lines to be removed in front. Inclusive.
     ### @param back_cut: the number of lines to be removed at the back. Inclusive. 
     """
-
-    parent_folder = os.path.join(os.getcwd(), "inputs")
-    print("Choose the story name using the number")
-    for i, story in enumerate(os.listdir(os.path.join(os.getcwd(), "inputs"))):
-        print(f"{i+1}: {story}")
-
-    story_folder = os.listdir(os.path.join(parent_folder))[int(input(":"))-1]
-    story_folder = os.path.join(os.getcwd(), parent_folder, story_folder)
+    story_folder = choose_file_dir()
 
     front_cut = int(input("Front cut: "))
     back_cut = int(input("Back cut: "))
@@ -127,7 +119,7 @@ def check_sequential_file_number():
             txt_files = [f for f in files if f.endswith('.txt')]
             sorted_files = sorted(txt_files, key=lambda x: int(x.split('.')[0]))
             
-            for counter, chapter in enumerate(sorted_files,1):
+            for counter, chapter in enumerate(sorted_files, int(sorted_files[0].split(".")[0])):
                 if(int(chapter.split('.')[0]) != counter):
                     print(f"Error: {counter} != {chapter} for story: {story}")
                     break
@@ -146,37 +138,95 @@ def make_sequential_file_number():
             print()
             print("#######################################")
             print(f"Editing in: {story_folder}")
-            for counter, chapter in enumerate(sorted_files,1):
+            for counter, chapter in enumerate(sorted_files,int(sorted_files[0].split(".")[0])):
                 os.rename(
                 src = os.path.join(story_folder, chapter),
                 dst = os.path.join(story_folder, f"{counter}.txt")
                 )
                 print(f"{chapter} -> {counter}.txt")
 
-if __name__ == '__main__':
-    print("1. Mass Replace Names using name2name.json")
-    print("2. Modify name2name json")
-    print("3. Cut Front and Back")
-    print("4. Remove all name paddings")
-    print("5. Check that files are sequential")
-    print("6. Make all files sequential")
-    choice = int(input("Choice: "))
-    match choice:
-        case 1:
-            mass_replace()
-        case 2:
 
-            full_story_name = str(input("Full story name (from name2name.json):"))
-            old_name = str(input("Old name:"))
-            new_name = str(input("New name:"))
-            modify_name2name_json_file(full_story_name,old_name,new_name)
-        case 3:
-            cut_front_and_back()
-        case 4:
-            remove_all_name_paddings()
-        case 5:
-            check_sequential_file_number()
-        case 6:
-            make_sequential_file_number()
-        case _:
-            print("Error pls")
+def check_and_remove_duplicates(directory):
+    # Get all .txt files sorted by name
+    files = sorted([f for f in os.listdir(directory) if f.endswith('.txt')])
+    
+    remove_files = []
+    for i in range(len(files) - 1):
+        file1 = os.path.join(directory, files[i])
+        file2 = os.path.join(directory, files[i+1])
+        
+        # Compare the two consecutive files
+        if filecmp.cmp(file1, file2, shallow=False):  # shallow=False compares file content
+            remove_files.append(file2)
+
+    for file in remove_files:
+        os.remove(file)  # Remove the repeated file
+        print("Removed: " + file)
+
+def check_duplicates():
+    folders = filter(os.path.isdir, os.listdir(os.path.join(os.getcwd(), "inputs")))
+    for folder in folders:
+        directory = os.path.join(os.getcwd(), "inputs", folder)
+        files = sorted([f for f in os.listdir(directory) if f.endswith('.txt')])
+    
+        for i in range(len(files) - 1):
+            file1 = os.path.join(directory, files[i])
+            file2 = os.path.join(directory, files[i+1])
+        
+        if filecmp.cmp(file1, file2, shallow=False):  # shallow=False compares file content
+            print(f"Same file: {file1} & {file2}")
+
+
+
+
+def choose_file_dir():
+    parent_folder = os.path.join(os.getcwd(), "inputs")
+    print("Choose the story name using the number")
+    for i, story in enumerate(os.listdir(os.path.join(os.getcwd(), "inputs"))):
+        print(f"{i+1}: {story}")
+
+    story_folder = os.listdir(os.path.join(parent_folder))[int(input(":"))-1]
+    story_folder = os.path.join(os.getcwd(), parent_folder, story_folder)
+
+    return story_folder
+
+
+if __name__ == '__main__':
+    while True:
+        print("1. Mass Replace Names using name2name.json")
+        print("2. Modify name2name json")
+        print("3. Cut Front and Back")
+        print("4. Remove all name paddings")
+        print("5. Check that files are sequential")
+        print("6. Make all files sequential")
+        print("7. Check and remove all file duplicates")
+        print("8. Check Duplicates")
+        choice = int(input("Choice: "))
+        match choice:
+            case 1:
+                mass_replace()
+            case 2:
+
+                full_story_name = str(input("Full story name (from name2name.json):"))
+                old_name = str(input("Old name:"))
+                new_name = str(input("New name:"))
+                modify_name2name_json_file(full_story_name,old_name,new_name)
+            case 3:
+                cut_front_and_back()
+            case 4:
+                remove_all_name_paddings()
+            case 5:
+                check_sequential_file_number()
+            case 6:
+                make_sequential_file_number()
+            case 7:
+                directory = choose_file_dir() 
+                check_and_remove_duplicates(directory)
+            case 8:
+                check_duplicates()
+            case _:
+                print("Error pls")
+                import sys
+                sys.exit(0)
+        input("Input Anything: ")
+        os.system('cls')

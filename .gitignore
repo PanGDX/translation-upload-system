@@ -3,6 +3,8 @@ outputs/
 inputs/
 json/
 __pycache__/
+temp/
 
 # Ignore all .json files
 *.json
+*.txt

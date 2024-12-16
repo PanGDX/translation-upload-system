@@ -179,20 +179,30 @@ def add_story(full_story_name: str, patreon_story_name: str) -> str:
 
 # Functiosn that concern drivers and interactions with GPT 
 
-def setup_chrome_driver() -> webdriver.Chrome:
+def setup_chrome_driver(is_headless = False) -> webdriver.Chrome:
     print("Make sure to close existing Chrome or else an error may occur")
     time.sleep(2)
 
+
     chrome_options = Options()
-    chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
-    # Overcome limited resource issues
+    chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
-    # Applicable only for Windows OS
     chrome_options.add_argument("--disable-gpu")
-    # Enable remote debugging
     chrome_options.add_argument("--remote-debugging-port=9222")
     chrome_options.add_argument(
-        "user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data")
+        "user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data"
+    )
+
+    # Remove or adjust unsupported flags
+    # If you need headless mode, try the older headless flag:
+    if is_headless:
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+
+    # This argument can help address deprecated fallback issues if needed
+    chrome_options.add_argument("--enable-unsafe-swiftshader")
+
+
     driver = webdriver.Chrome(service=Service(
         ChromeDriverManager().install()), options=chrome_options)
     return driver

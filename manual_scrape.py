@@ -21,4 +21,4 @@ for counter in range(current_chapter_number, to_chapter + 1):
         file.write(content)
 
     pyautogui.press('right')
-    time.sleep(2)
+    time.sleep(3)

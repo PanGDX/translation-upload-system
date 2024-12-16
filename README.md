@@ -22,3 +22,16 @@ before running:
 - get rid of padding zeros for all text file names
 - make sure that the folder name aligns with the data.json
 - UPDATE DATA.JSON AND NAME2NAME.JSON MUST MUST MUST
+
+
+
+
+no need to do cyberpunk
+
+
+upload all the chapters for Flevance from temp
+align the chapters for Flevance
+
+
+run extract.py for all
+replace all the common names (read from Names.txt too)
