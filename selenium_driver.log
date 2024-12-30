@@ -1,0 +1,312 @@
+2024-12-23 13:21:50,310 - INFO - ====== WebDriver manager ======
+2024-12-23 13:21:51,206 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 13:21:51,458 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 13:21:51,678 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 13:21:52,698 - INFO - WebDriver version 131.0.6778.204 selected
+2024-12-23 13:21:52,698 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/win32/chromedriver-win32.zip
+2024-12-23 13:21:52,698 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/win32/chromedriver-win32.zip
+2024-12-23 13:21:52,998 - INFO - Driver downloading response is 200
+2024-12-23 13:22:04,159 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 13:22:04,363 - INFO - Driver has been saved in cache [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204]
+2024-12-23 13:29:54,048 - INFO - ====== WebDriver manager ======
+2024-12-23 13:29:54,977 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 13:29:55,103 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 13:29:55,276 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 13:32:06,862 - INFO - ====== WebDriver manager ======
+2024-12-23 13:32:07,684 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 13:32:07,794 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 13:32:07,903 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 13:43:46,454 - INFO - ====== WebDriver manager ======
+2024-12-23 13:43:47,268 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 13:43:47,440 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 13:43:47,488 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 14:07:40,397 - INFO - ====== WebDriver manager ======
+2024-12-23 14:07:41,198 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 14:07:41,245 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 14:07:41,433 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 15:21:07,627 - INFO - ====== WebDriver manager ======
+2024-12-23 15:21:08,702 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:21:08,968 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:21:09,077 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 15:27:02,066 - INFO - ====== WebDriver manager ======
+2024-12-23 15:27:03,063 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:27:03,189 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:27:03,300 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 15:29:20,157 - INFO - ====== WebDriver manager ======
+2024-12-23 15:29:21,143 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:29:21,346 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:29:21,600 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 15:38:05,402 - INFO - ====== WebDriver manager ======
+2024-12-23 15:38:06,408 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:38:06,800 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:38:07,021 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 15:40:23,853 - INFO - ====== WebDriver manager ======
+2024-12-23 15:40:24,859 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:40:25,033 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:40:25,332 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 15:43:39,126 - INFO - ====== WebDriver manager ======
+2024-12-23 15:43:40,123 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:43:40,234 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:43:40,329 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 15:44:38,160 - INFO - ====== WebDriver manager ======
+2024-12-23 15:44:39,133 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:44:39,321 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:44:39,431 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 15:46:25,928 - INFO - ====== WebDriver manager ======
+2024-12-23 15:46:26,915 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:46:27,214 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:46:27,324 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 15:56:31,369 - INFO - ====== WebDriver manager ======
+2024-12-23 15:56:32,355 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:56:32,468 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:56:32,669 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 15:59:51,670 - INFO - ====== WebDriver manager ======
+2024-12-23 15:59:52,667 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:59:52,786 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 15:59:52,951 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 16:01:34,028 - INFO - ====== WebDriver manager ======
+2024-12-23 16:01:35,004 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 16:01:35,151 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 16:01:35,262 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 16:05:30,747 - INFO - ====== WebDriver manager ======
+2024-12-23 16:05:31,531 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 16:05:31,671 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 16:05:31,784 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 16:27:08,500 - INFO - ====== WebDriver manager ======
+2024-12-23 16:27:09,384 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 16:27:09,522 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 16:27:09,632 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 16:29:52,381 - INFO - ====== WebDriver manager ======
+2024-12-23 16:29:53,197 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 16:29:53,281 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 16:29:53,439 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 17:15:53,465 - INFO - ====== WebDriver manager ======
+2024-12-23 17:15:54,373 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 17:15:54,742 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 17:15:54,891 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 17:23:52,199 - INFO - ====== WebDriver manager ======
+2024-12-23 17:23:53,032 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 17:23:53,409 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 17:23:53,503 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 17:26:26,448 - INFO - ====== WebDriver manager ======
+2024-12-23 17:26:27,253 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 17:26:27,332 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 17:26:27,504 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 17:35:16,252 - INFO - ====== WebDriver manager ======
+2024-12-23 17:35:17,077 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 17:35:17,234 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 17:35:17,350 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 17:58:09,444 - INFO - ====== WebDriver manager ======
+2024-12-23 17:58:10,294 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 17:58:10,483 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 17:58:10,687 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 18:02:00,549 - INFO - ====== WebDriver manager ======
+2024-12-23 18:02:01,326 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:02:01,538 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:02:01,627 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 18:06:10,061 - INFO - ====== WebDriver manager ======
+2024-12-23 18:06:10,862 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:06:11,168 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:06:11,552 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 18:10:53,180 - INFO - ====== WebDriver manager ======
+2024-12-23 18:10:53,971 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:10:54,071 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:10:54,215 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 18:15:25,914 - INFO - ====== WebDriver manager ======
+2024-12-23 18:15:26,721 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:15:26,983 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:15:27,093 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 18:19:16,571 - INFO - ====== WebDriver manager ======
+2024-12-23 18:19:17,397 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:19:17,596 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:19:17,780 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 18:23:53,510 - INFO - ====== WebDriver manager ======
+2024-12-23 18:23:54,291 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:23:54,599 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:23:54,793 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 18:28:08,120 - INFO - ====== WebDriver manager ======
+2024-12-23 18:28:08,902 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:28:09,027 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 18:28:09,209 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 21:03:09,362 - INFO - ====== WebDriver manager ======
+2024-12-23 21:03:10,321 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:03:10,713 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:03:10,823 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 21:10:46,492 - INFO - ====== WebDriver manager ======
+2024-12-23 21:10:47,302 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:10:47,428 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:10:47,727 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 21:19:07,378 - INFO - ====== WebDriver manager ======
+2024-12-23 21:19:08,266 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:19:08,360 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:19:08,534 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 21:27:21,727 - INFO - ====== WebDriver manager ======
+2024-12-23 21:27:22,539 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:27:22,664 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:27:23,040 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 21:34:47,685 - INFO - ====== WebDriver manager ======
+2024-12-23 21:34:48,465 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:34:48,656 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:34:48,756 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 21:43:05,719 - INFO - ====== WebDriver manager ======
+2024-12-23 21:43:06,500 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:43:06,563 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:43:06,617 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-23 21:50:42,323 - INFO - ====== WebDriver manager ======
+2024-12-23 21:50:43,103 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:50:43,228 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-23 21:50:43,527 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-24 05:48:00,479 - INFO - ====== WebDriver manager ======
+2024-12-24 05:48:01,406 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 05:48:01,532 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 05:48:01,767 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 05:48:02,066 - INFO - WebDriver version 131.0.6778.204 selected
+2024-12-24 05:48:02,066 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/win32/chromedriver-win32.zip
+2024-12-24 05:48:02,066 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/win32/chromedriver-win32.zip
+2024-12-24 05:48:02,255 - INFO - Driver downloading response is 200
+2024-12-24 05:48:10,464 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 05:48:10,888 - INFO - Driver has been saved in cache [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204]
+2024-12-24 05:53:45,523 - INFO - ====== WebDriver manager ======
+2024-12-24 05:53:46,521 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 05:53:46,767 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 05:53:46,896 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-24 05:58:15,593 - INFO - ====== WebDriver manager ======
+2024-12-24 05:58:16,417 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 05:58:16,558 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 05:58:16,762 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-24 06:02:25,506 - INFO - ====== WebDriver manager ======
+2024-12-24 06:02:26,473 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:02:26,520 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:02:26,614 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-24 06:08:16,314 - INFO - ====== WebDriver manager ======
+2024-12-24 06:08:17,298 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:08:17,345 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:08:17,580 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-24 06:13:20,469 - INFO - ====== WebDriver manager ======
+2024-12-24 06:13:21,435 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:13:21,760 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:13:21,782 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-24 06:18:01,738 - INFO - ====== WebDriver manager ======
+2024-12-24 06:18:02,720 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:18:02,799 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:18:02,830 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-24 06:23:52,384 - INFO - ====== WebDriver manager ======
+2024-12-24 06:23:53,396 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:23:53,443 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:23:53,506 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-24 06:28:49,302 - INFO - ====== WebDriver manager ======
+2024-12-24 06:28:50,267 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:28:50,414 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-24 06:28:50,508 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-29 21:45:34,891 - INFO - ====== WebDriver manager ======
+2024-12-29 21:45:35,802 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 21:45:36,010 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 21:45:36,295 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 21:45:36,973 - INFO - WebDriver version 131.0.6778.204 selected
+2024-12-29 21:45:36,973 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/win32/chromedriver-win32.zip
+2024-12-29 21:45:36,973 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/win32/chromedriver-win32.zip
+2024-12-29 21:45:37,178 - INFO - Driver downloading response is 200
+2024-12-29 21:45:46,719 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 21:45:46,875 - INFO - Driver has been saved in cache [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204]
+2024-12-29 21:50:46,951 - INFO - ====== WebDriver manager ======
+2024-12-29 21:50:47,745 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 21:50:47,840 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 21:50:47,934 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-29 21:55:01,230 - INFO - ====== WebDriver manager ======
+2024-12-29 21:55:02,209 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 21:55:02,586 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 21:55:02,789 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-29 21:59:03,170 - INFO - ====== WebDriver manager ======
+2024-12-29 21:59:04,053 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 21:59:04,100 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 21:59:04,194 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-29 22:03:54,946 - INFO - ====== WebDriver manager ======
+2024-12-29 22:03:55,806 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 22:03:56,068 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 22:03:56,273 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-29 22:09:25,133 - INFO - ====== WebDriver manager ======
+2024-12-29 22:09:25,990 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 22:09:26,134 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 22:09:26,180 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-29 22:13:35,790 - INFO - ====== WebDriver manager ======
+2024-12-29 22:13:36,633 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 22:13:36,677 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 22:13:36,763 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-29 22:18:42,334 - INFO - ====== WebDriver manager ======
+2024-12-29 22:18:43,161 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 22:18:43,346 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 22:18:43,692 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-29 22:23:06,560 - INFO - ====== WebDriver manager ======
+2024-12-29 22:23:07,395 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 22:23:07,480 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-29 22:23:07,619 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 07:37:21,297 - INFO - ====== WebDriver manager ======
+2024-12-30 07:37:22,151 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:37:22,294 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:37:22,334 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:37:22,780 - INFO - WebDriver version 131.0.6778.204 selected
+2024-12-30 07:37:22,780 - INFO - Modern chrome version https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/win32/chromedriver-win32.zip
+2024-12-30 07:37:22,780 - INFO - About to download new driver from https://storage.googleapis.com/chrome-for-testing-public/131.0.6778.204/win32/chromedriver-win32.zip
+2024-12-30 07:37:23,035 - INFO - Driver downloading response is 200
+2024-12-30 07:37:31,603 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:37:31,744 - INFO - Driver has been saved in cache [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204]
+2024-12-30 07:39:06,719 - INFO - ====== WebDriver manager ======
+2024-12-30 07:39:07,491 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:39:07,647 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:39:07,772 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 07:41:05,733 - INFO - ====== WebDriver manager ======
+2024-12-30 07:41:06,588 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:41:06,765 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:41:06,894 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 07:42:49,710 - INFO - ====== WebDriver manager ======
+2024-12-30 07:42:50,509 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:42:50,589 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:42:50,789 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 07:44:28,468 - INFO - ====== WebDriver manager ======
+2024-12-30 07:44:29,268 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:44:29,355 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:44:29,479 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 07:46:17,079 - INFO - ====== WebDriver manager ======
+2024-12-30 07:46:17,882 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:46:18,012 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:46:18,122 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 07:47:59,625 - INFO - ====== WebDriver manager ======
+2024-12-30 07:48:00,428 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:48:00,876 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 07:48:00,908 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 12:37:19,413 - INFO - ====== WebDriver manager ======
+2024-12-30 12:37:20,211 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:37:20,273 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:37:20,304 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 12:40:00,863 - INFO - ====== WebDriver manager ======
+2024-12-30 12:40:01,644 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:40:01,691 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:40:01,722 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 12:42:30,772 - INFO - ====== WebDriver manager ======
+2024-12-30 12:42:31,643 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:42:31,679 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:42:31,713 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 12:45:01,304 - INFO - ====== WebDriver manager ======
+2024-12-30 12:45:02,085 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:45:02,116 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:45:02,148 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 12:47:45,302 - INFO - ====== WebDriver manager ======
+2024-12-30 12:47:46,093 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:47:46,124 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:47:46,171 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 12:50:26,363 - INFO - ====== WebDriver manager ======
+2024-12-30 12:50:27,138 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:50:27,185 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:50:27,232 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 12:53:15,357 - INFO - ====== WebDriver manager ======
+2024-12-30 12:53:16,137 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:53:16,168 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:53:16,215 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 12:56:25,554 - INFO - ====== WebDriver manager ======
+2024-12-30 12:56:26,359 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:56:26,396 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:56:26,430 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache
+2024-12-30 12:58:56,108 - INFO - ====== WebDriver manager ======
+2024-12-30 12:58:56,923 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:58:56,955 - INFO - Get LATEST chromedriver version for google-chrome
+2024-12-30 12:58:57,002 - INFO - Driver [C:\Users\User\.wdm\drivers\chromedriver\win64\131.0.6778.204\chromedriver-win32/chromedriver.exe] found in cache

@@ -1,20 +1,13 @@
 """
-This program handles the mass replacement of names
-This works for both Chinese and English (input and output)
-The replacement is read from a json file
-The format of the json file is as follows
-{
-    "story": {
-        "Replace name" : "New name"
-    }
-}
+Status: Working
+
+This program is a collection of functions that are useful in managing the stories and common issues that arise.
 """
 
 # Test Status: Tested
 
-import re, os, filecmp
+import re, os, filecmp, json
 from utility import load_json
-from utility import  modify_name2name_json_file
 
 def mass_replace():
     def replace_in_all_files(story_folder: str, old_name: str, new_name: str):
@@ -33,27 +26,27 @@ def mass_replace():
                 file_overwrite.write(overwrite)
 
     replacement_names_json = load_json(os.path.join(os.getcwd(),'json','name2name.json'))
-    input_folder_question = str(input("Is the story's folder in the 'input' folder? (y/n) "))
-    
-    if (input_folder_question).lower() == "y":
-        parent_folder = "inputs"
-    else:
-        parent_folder = "outputs"
 
-    print("Choose the story name using the number")
-    for i, story in enumerate(os.listdir(os.path.join(parent_folder))):
-        print(f"{i+1}: {story}")
-
-    story_folder = os.listdir(os.path.join(parent_folder))[int(input(":"))-1]
-    story_folder = os.path.join(os.getcwd(), parent_folder, story_folder)
-    story_folder = choose_file_dir()
-    for story, name2name in replacement_names_json.items():
+    for story_dir, name2name in replacement_names_json.items():
         for new_name, old_name_list in name2name.items():
             for old_name in old_name_list:
                 print(f"Replacing: {old_name} -> {new_name}")
-                replace_in_all_files(story_folder, old_name, new_name)
+                replace_in_all_files(story_dir, old_name, new_name)
 
+def replace_in_all_files(story_folder: str, old_name: str, new_name: str):
+    # Adding capturing groups around the special characters
 
+    pattern = fr"(?<![A-Za-z]){old_name}(?![A-Za-z])"        
+    for file in os.listdir(story_folder):
+        file_path = os.path.join(story_folder, file)
+        file_content = open(file=file_path, mode="r", encoding="utf-8").read()
+        with open(file=file_path, mode="w", encoding="utf-8") as file_overwrite:
+            overwrite = re.sub(
+                pattern,
+                new_name,
+                file_content
+            )
+            file_overwrite.write(overwrite)
 
 def cut_front_and_back():
     """
@@ -177,16 +170,54 @@ def check_duplicates():
             print(f"Same file: {file1} & {file2}")
 
 
+def modify_name2name_json_file(full_story_dir_list: str|list, old_name: str, new_name: str):
+    """
+    ### @param full_story_name
+    ### @param old_name: old name to be replaced
+    ### @param new_name: new name to use to replace
+    Add a new name to do replace old_name with.
 
 
-def choose_file_dir():
-    parent_folder = os.path.join(os.getcwd(), "inputs")
+    name2name.json has the format:
+    {
+        "story dir":
+            {
+                "new_name" : ["old1", "old2"]
+            }
+    }
+    """
+    if full_story_dir_list == 'str':
+        full_story_dir_list = [full_story_dir_list]
+    for full_story_dir in full_story_dir_list:
+        file_path = os.path.join(os.getcwd(), "json", "name2name.json")
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+
+        if full_story_dir not in data:
+            data[full_story_dir] = {}
+
+        if (new_name not in data[full_story_dir]):
+            data[full_story_dir][new_name] = []
+
+        assert (type(data[full_story_dir][new_name]) == list)
+        data[full_story_dir][new_name].append(old_name)
+
+        json_object = json.dumps(data, indent=4)
+        name2name_dir = os.path.join(os.getcwd(), 'json', 'name2name.json')
+        with open(name2name_dir, "w") as outfile:
+            outfile.write(json_object)
+
+def choose_file_dir(is_input_folder:bool = True):
+    if not is_input_folder:
+        parent_folder = os.path.join(os.getcwd(), "outputs")
+    else:
+        parent_folder = os.path.join(os.getcwd(), "inputs")
     print("Choose the story name using the number")
-    for i, story in enumerate(os.listdir(os.path.join(os.getcwd(), "inputs"))):
+    for i, story in enumerate(os.listdir(parent_folder)):
         print(f"{i+1}: {story}")
 
-    story_folder = os.listdir(os.path.join(parent_folder))[int(input(":"))-1]
-    story_folder = os.path.join(os.getcwd(), parent_folder, story_folder)
+    story_folder = os.listdir(parent_folder)[int(input(":"))-1]
+    story_folder = os.path.join(parent_folder, story_folder)
 
     return story_folder
 
@@ -201,16 +232,25 @@ if __name__ == '__main__':
         print("6. Make all files sequential")
         print("7. Check and remove all file duplicates")
         print("8. Check Duplicates")
+        print("9. Mass replace one-off")
         choice = int(input("Choice: "))
         match choice:
             case 1:
                 mass_replace()
             case 2:
-
-                full_story_name = str(input("Full story name (from name2name.json):"))
+                is_input_folder = input('Input Folder? (y/n/b): ').lower().strip()
                 old_name = str(input("Old name:"))
                 new_name = str(input("New name:"))
-                modify_name2name_json_file(full_story_name,old_name,new_name)
+                
+                match is_input_folder:
+                    case 'y':
+                        folder_dir = choose_file_dir(True)
+                    case 'n':
+                        folder_dir = choose_file_dir(False)
+                    case 'b':
+                        folder_dir = [choose_file_dir(True)]
+                        folder_dir.append(folder_dir[0].replace("inputs","outputs"))
+                modify_name2name_json_file(folder_dir,old_name,new_name)
             case 3:
                 cut_front_and_back()
             case 4:
@@ -224,6 +264,25 @@ if __name__ == '__main__':
                 check_and_remove_duplicates(directory)
             case 8:
                 check_duplicates()
+            case 9:
+                is_input_folder = input('Input Folder? (y/n/b): ').lower().strip()
+                old_name = str(input("Old name:"))
+                new_name = str(input("New name:"))
+                
+                match is_input_folder:
+                    case 'y':
+                        folder_dir = choose_file_dir(True)
+                    case 'n':
+                        folder_dir = choose_file_dir(False)
+                    case 'b':
+                        folder_dir = [choose_file_dir(True)] 
+                        folder_dir.append(folder_dir[0].replace("inputs","outputs"))
+                
+                print(folder_dir)
+                for folder in folder_dir:
+                    replace_in_all_files(folder,
+                                     old_name,
+                                     new_name)
             case _:
                 print("Error pls")
                 import sys

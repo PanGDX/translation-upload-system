@@ -2,6 +2,7 @@ import os
 import json
 import re
 import time
+import deepl
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -53,39 +54,7 @@ def split_paragraph(text: str) -> tuple[str, str]:
     return part1, part2
 
 
-def modify_name2name_json_file(full_story_name: str, old_name: str, new_name: str):
-    """
-    ### @param full_story_name
-    ### @param old_name: old name to be replaced
-    ### @param new_name: new name to use to replace
-    Add a new name to do replace old_name with.
 
-
-    name2name.json has the format:
-    {
-        "story name":
-            {
-                "new_name" : ["old1", "old2"]
-            }
-    }
-    """
-    file_path = os.path.join(os.getcwd(), "json", "name2name.json")
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-
-    if full_story_name not in data:
-        data[full_story_name] = {}
-
-    if (new_name not in data[full_story_name]):
-        data[full_story_name][new_name] = []
-
-    assert (type(data[full_story_name][new_name]) == list)
-    data[full_story_name][new_name].append(old_name)
-
-    json_object = json.dumps(data, indent=4)
-    name2name_dir = os.path.join(os.getcwd(), 'json', 'name2name.json')
-    with open(name2name_dir, "w") as outfile:
-        outfile.write(json_object)
 
 
 def modify_data_json_file(
@@ -185,10 +154,10 @@ def setup_chrome_driver(is_headless = False) -> webdriver.Chrome:
 
 
     chrome_options = Options()
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.add_argument("--remote-debugging-port=9222")
+    # chrome_options.add_argument("--no-sandbox")
+    # chrome_options.add_argument("--disable-dev-shm-usage")
+    # chrome_options.add_argument("--disable-gpu")
+    # chrome_options.add_argument("--remote-debugging-port=9222")
     chrome_options.add_argument(
         "user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data"
     )
@@ -198,10 +167,6 @@ def setup_chrome_driver(is_headless = False) -> webdriver.Chrome:
     if is_headless:
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-
-    # This argument can help address deprecated fallback issues if needed
-    chrome_options.add_argument("--enable-unsafe-swiftshader")
-
 
     driver = webdriver.Chrome(service=Service(
         ChromeDriverManager().install()), options=chrome_options)
@@ -236,3 +201,8 @@ def submit_to_GPT(client: OpenAI, system_message: str, user_message: str, model:
         print(log)
 
     return completion.choices[0].message.content
+
+def get_translator_using_deepl():
+    auth_key = load_json(os.path.join(os.getcwd(), 'json','APIKEY.json'))["DeepL"]
+    translator = deepl.Translator(auth_key)
+    return translator

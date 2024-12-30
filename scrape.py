@@ -1,5 +1,12 @@
-# Test Status: Tested
+"""
+Status: Working
 
+An automated scraping program that runs in the background, using Selenium.
+This program does not work on websites with Captcha.
+This program occasionally fails. This is inevitable due to the nature of websites haivng a great deal of variance
+
+Minimised error occurrence by scraping with XML and then BS4.
+"""
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -222,12 +229,12 @@ def scrape(double_count:bool):
 				if next_link:
 					url = url_formatting(url, next_link)
 
-					if not skip_counter:
-						counter += 1
-
-					if double_count == True:
+					if double_count:
+						if not skip_counter:
+							counter += 1
 						skip_counter = not skip_counter
-
+					else:
+						counter += 1
 					print(f"Navigating to the next link: {url}")
 				else:
 					print("No next link found, or there was an error fetching it.")
