@@ -7,7 +7,7 @@ This program is a collection of functions that are useful in managing the storie
 # Test Status: Tested
 
 import re, os, filecmp, json
-from utility import load_json
+from old.utility import load_json
 
 def mass_replace():
     def replace_in_all_files(story_folder: str, old_name: str, new_name: str):

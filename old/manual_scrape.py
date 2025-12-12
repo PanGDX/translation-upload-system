@@ -9,7 +9,7 @@ import pyautogui
 import pyperclip
 import time
 import os
-from utility import add_story
+from old.utility import add_story
 
 
 

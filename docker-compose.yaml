@@ -1,0 +1,18 @@
+services:
+  novel-app:
+    build: .
+    container_name: novel_translator
+    ports:
+      - "8080:8080"
+    volumes:
+      # 1. Code Volume (Hot Reloading)
+      - ./app:/app/app
+      
+      # 2. Data Volume (Persistence)
+      # This ensures /data on host matches /data in container
+      - ./data:/data
+      
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - STORAGE_PATH=/data
+      - NICEGUI_STORAGE_PATH=/data/.nicegui

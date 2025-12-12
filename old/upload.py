@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from utility import setup_chrome_driver, clean_file_name, load_json, save_json
+from old.utility import setup_chrome_driver, clean_file_name, load_json, save_json
 
 # Set up logging so that all Selenium logs go to a file instead of the terminal
 logging.basicConfig(

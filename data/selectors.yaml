@@ -1,0 +1,41 @@
+# selectors.yaml
+
+patreon:
+  latest_chapter_text:
+    xpath: "//div[contains(@class, 'sc-jrQzAO')]" # Adjust class if needed, or use text based logic
+  
+  create_flow:
+    create_button:
+      xpath: "//button[contains(., 'Create')]"
+    title_input:
+      xpath: "//textarea[@aria-label='Title']"
+    body_input:
+      xpath: "//div[@contenteditable='true' and contains(@class, 'ProseMirror')]"
+    category_dropdown:
+      xpath: "//button[@id='collections-list-dropdown']"
+    category_option_template: 
+      xpath: "//li[contains(., '{REPLACE}')]"
+    next_button:
+      xpath: "//button[contains(., 'Next') and @type='button']"
+    publish_button:
+      xpath: "//button[contains(., 'Publish') and @type='button']"
+    close_share_dialog:
+      xpath: "//button[@aria-label='Close the share dialog']"
+
+inkstone:
+  latest_chapter_text:
+    xpath: "//a[contains(@class, 'title--')]"
+    
+  create_flow:
+    create_button:
+      xpath: "//button[contains(., 'CREATE CHAPTER')]"
+    editor_iframe:
+      xpath: "//div[contains(@class, 'tox-edit-area')]//iframe"
+    body_input_inside_iframe:
+      xpath: "//body[@id='tinymce']"
+    title_input:
+      xpath: "//input[@type='text' and @placeholder='Title Here']"
+    publish_button:
+      xpath: "//button[span[contains(., 'Publish')]]"
+    confirm_button:
+      xpath: "//button[contains(., 'confirm')]"

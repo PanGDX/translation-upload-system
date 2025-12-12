@@ -15,7 +15,7 @@ from selenium import webdriver
 import os
 import time
 import random
-from utility import add_story, setup_chrome_driver
+from old.utility import add_story, setup_chrome_driver
 import traceback
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup

@@ -10,7 +10,7 @@ import traceback
 from langdetect import detect
 import argostranslate.package
 import argostranslate.translate
-from utility import submit_to_GPT, load_json, get_openai_client, get_translator_using_deepl
+from old.utility import submit_to_GPT, load_json, get_openai_client, get_translator_using_deepl
 from openai import OpenAI
 import string
 

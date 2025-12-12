@@ -2,7 +2,7 @@ import os
 import json
 import traceback
 from langdetect import detect
-from utility import (
+from old.utility import (
     load_json,
     submit_to_GPT,
     split_paragraph,
