@@ -45,6 +45,9 @@ class Scraper_Unit:
         try:
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
             response = self._session.get(self._url, headers=headers, timeout=10)
+            
+            response.encoding = response.apparent_encoding 
+
             response.raise_for_status()
             return BeautifulSoup(response.text, 'html.parser')
         except Exception as e:
@@ -128,10 +131,11 @@ class Scraper_Unit:
         Candidates: {json.dumps(candidates[:20])}""".strip()
 
         system_prompt = """
-        Return ONLY the JSON object with the field 'identifier'. 
-        The 'identifier' should be the visible text (preferred) or the unique class name.
-        Example: {{"identifier": "Next Chapter"}}""".strip()
+        Return ONLY the JSON object with the field 'response'. 
+        The 'response' should be the visible text (preferred) or the unique class name.
+        Example: {{"response": "Next Chapter"}}""".strip()
 
+        print("Logging: Sent to AI - find next button")
         query = Input_Query(
             type="Coding", # Using 'Coding' temp (0.0) for precision
             system_prompt=system_prompt,
@@ -140,12 +144,12 @@ class Scraper_Unit:
         
         # 3. AI Request
         try:
-            response_obj = ai_request(query) 
+            response_obj:Output_Response = ai_request(query) 
             # Assuming output_response has a 'content' dict or similar. 
             # Adjust based on your actual Output_Response model structure.
             # Here I assume the AI returns a dict matching the structure requested.
-            
-            identifier = response_obj.get("identifier", "") # Adjust based on actual model
+            print(f"Logging: {response_obj=}")
+            identifier = response_obj.response
             print(f"AI identified next button as: {identifier}")
             return identifier
         except Exception as e:
@@ -165,24 +169,28 @@ class Scraper_Unit:
             script.decompose()
         
         raw_text = soup.get_text(separator="\n")[:10000] # Limit tokens
-
-        prompt = f"""
+        print(f"Log: {raw_text=}")
+        system_prompt = f"""
         Extract the novel chapter from this raw text.
         1. Identify the Chapter Number (integer).
         2. Identify the Chapter Title.
         3. Clean the body content (remove menu text, ads, 'prev/next' text).
-        
+
+        Return JSON containing: "chapter_number", "content", "title"
+        """
+
+        user_prompt = f"""
         Raw Text:
         {raw_text}
-        
-        Return JSON matching the Raw_Chapter model keys.
         """
 
         query = Input_Query(
             type="Data Cleaning",
-            prompt=prompt
+            system_prompt=system_prompt,
+            user_query=user_prompt
         )
 
+        print("Log: Sending to AI")
         response_obj = ai_request(query)
         
         # Use Pydantic model_validate to convert dict to Raw_Chapter object

@@ -18,7 +18,7 @@ class Translated_Chapter(Chapter):
     type: str = "translated"
 
 class Input_Query(BaseModel):
-    temperature: Literal["Cleaning", "Translation"]
+    type: Literal["Coding", "Data Cleaning", "Conversation", "Translation", "Creative Writing"]
     system_prompt: str
     user_query: str
 
